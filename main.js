@@ -90,7 +90,7 @@ function evaluate(line, labels) {
     } else if (line.match(/^\^[0-9]+$/)) {
         // jump to number
         let value = parseInt(line.substr(1));
-        nextPc = value;
+        nextPc = value - 1;
         return {};
     } else if (line.match(/!/)) {
         // halt
