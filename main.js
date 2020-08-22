@@ -80,9 +80,10 @@ function evaluate(line, labels) {
     } else if (line.match(/^\^[A-Z]+$/)) {
         // jump to label
         let label = line.substr(1);
+        console.log(labels);
         if (labels[label] == null) {
             // invalid label
-            output.append('Error: undefined label');
+            output.append(`Error: undefined label ${label}`);
             return {};
         }
         nextPc = labels[label];
@@ -105,6 +106,7 @@ function execute() {
     output.empty();
     let lines = codearea.val().split('\n');
     let labels = compile();
+    console.log(labels);
     if (labels === -1) {
         codearea.toggleAttribute("readonly", true);
         return;
@@ -128,7 +130,10 @@ function execute() {
         // get line
         nextPc = pc + 1;
         let line = lines[pc];
-        evaluate(line, globals, mem, labels);
+        if (line.match(/^[A-Z]+:/)) {
+            line = line.substr(line.indexOf(':') + 1);
+        }
+        evaluate(line, labels);
         console.log(globals);
         if (nextPc === -1) {
             break;
