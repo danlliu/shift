@@ -16,7 +16,7 @@ The # statement evaluates to a value and has the syntax of `#{[0-9]+}`. It evalu
 #### The > Statement:
 The > statement evaluates to a value and has the syntax of `{value}>{referenced value}`. It assigns the
  value from the left side of `>` to the referenced value on
- the right side of `>`, and evaluates to whatever value was assigned.
+ the right side of `>`, and evaluates to whatever value was assigned. Only one > statement can appear per line.
 #### The ^ Statement:
 The ^ statement evaluates to nothing and has the syntax of `^{value}` or `^{[0-9]+}`. It is the equivalent of a jump or
  goto
@@ -27,3 +27,9 @@ The $ statement evaluates to a referenced value and has the syntax of `$[A-Z]`. 
  global variable specified by the letter. There are 26 global variables available for use, corresponding to the
   letters A-Z.
 #### The \_PRINT\_ Statement:
+print stuff
+#### The ! Statement:
+Unconditional halt
+#### The Ternary:
+The ternary evaluates to nothing and has the syntax of `{value}?{statement}:{statement}`. Only one ternary statement
+ can appear per line.
