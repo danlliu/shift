@@ -1,12 +1,13 @@
 shift: the programming language
 ---
 
-###Statements:
+### Statements:
 All statements have a specific syntax, and evaluate to either a value, a referenced value, or nothing. The syntax
  definition may use regular expressions. When `value` is used, it can refer to anything that acts as a value or a
   referenced value. Curly braces (`{}`) are used to signify parameters and should not be included in code. For
    example, one of the syntaxes of an @ statement (shown below) is `@{[0-9]+}`, but when using one, should be written
     as, for example, `@18`.
+    
 #### The @ Statement:
 The @ statement evaluates to a referenced value and has the syntax of `@{value}` or `@{[0-9]+}`. The first syntax
  evaluates to the value at memory address `value`, while the second syntax evaluates to the value at the memory
