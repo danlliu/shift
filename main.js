@@ -47,7 +47,16 @@ function evaluate(line, labels) {
         let parts = line.split(' ');
         console.log(parts);
         for (let i = 1; i < parts.length; i++) {
-            let result = evaluate(parts[i], labels).val;
+            let result = evaluate(parts[i], labels);
+            if (result.val != null) {
+                result = result.val;
+            }
+            else if (result.text != null) {
+                result = result.text;
+            }
+            else {
+                result = "error!";
+            }
             console.log(`Result: ${result}`);
             output.append(`${result} `);
         }
@@ -58,16 +67,56 @@ function evaluate(line, labels) {
         // ternary
         let parts = line.split(/[?:]/);
         if (evaluate(parts[0], labels).val !== 0) {
-            evaluate(parts[1], labels);
+            let result = evaluate(parts[1], labels);
+            if (result.val != null) return {val: result.val};
+            else return {text: result.text};
         } else {
-            evaluate(parts[2], labels);
+            let result = evaluate(parts[2], labels);
+            if (result.val != null) return {val: result.val};
+            else return {text: result.text};
         }
-        return {};
     } else if (line.match(/.*>.*/)) {
-        let parts = line.split('>');
+        let parts = line.split(/>(.+)/);
         let newvalue = evaluate(parts[0], labels).val;
         assignToValueReference(newvalue, evaluate(parts[1], labels), labels);
         return {val: newvalue};
+    } else if (line.match(/.*\*.*/)) {
+        let parts = line.split(/\*(.+)/);
+        return {val: evaluate(parts[0], labels).val * evaluate(parts[1], labels).val};
+    } else if (line.match(/.*\|.*/)) {
+        let parts = line.split(/\|(.+)/);
+        return {val: Math.floor(evaluate(parts[0], labels).val / evaluate(parts[1], labels).val)};
+    } else if (line.match(/.*%.*/)) {
+        let parts = line.split(/%(.+)/);
+        return {val: evaluate(parts[0], labels).val % evaluate(parts[1], labels).val};
+    } else if (line.match(/.*\+.*/)) {
+        let parts = line.split(/\+(.+)/);
+        return {val: evaluate(parts[0], labels).val + evaluate(parts[1], labels).val};
+    } else if (line.match(/.*-.*/)) {
+        let parts = line.split(/-(.+)/);
+        return {val: evaluate(parts[0], labels).val - evaluate(parts[1], labels).val};
+    } else if (line.match(/.*_EQ_.*/)) {
+        let parts = line.split(/_EQ_(.+)/);
+        return {val: (evaluate(parts[0], labels).val === evaluate(parts[1], labels).val ? 1 : 0)};
+    } else if (line.match(/.*_NEQ_.*/)) {
+        let parts = line.split(/_NEQ_(.+)/);
+        return {val: (evaluate(parts[0], labels).val === evaluate(parts[1], labels).val ? 0 : 1)};
+    } else if (line.match(/.*_LT_.*/)) {
+        let parts = line.split(/_LT_(.+)/);
+        return {val: (evaluate(parts[0], labels).val < evaluate(parts[1], labels).val ? 1 : 0)};
+    } else if (line.match(/.*_GT_.*/)) {
+        let parts = line.split(/_GT_(.+)/);
+        return {val: (evaluate(parts[0], labels).val > evaluate(parts[1], labels).val ? 1 : 0)};
+    } else if (line.match(/.*_AND_.*/)) {
+        let parts = line.split(/_AND_(.+)/);
+        return {val: (evaluate(parts[0], labels).val !== 0 && evaluate(parts[1], labels).val !== 0 ? 1 : 0)};
+    } else if (line.match(/.*_OR_.*/)) {
+        let parts = line.split(/_OR_(.+)/);
+        return {val: (evaluate(parts[0], labels).val !== 0 && evaluate(parts[1], labels).val !== 0 ? 1 : 0)};
+    }
+    else if (line.match(/_NOT_.*/)) {
+        let negate = evaluate(line.substr(5), labels).val;
+        return {val: (negate === 0 ? 1 : 0)};
     } else if (line.match(/@.*/)) {
         let addr = evaluate(line.substr(1), labels).val;
         return {memAddr: addr, val: mem[addr]};
@@ -98,7 +147,7 @@ function evaluate(line, labels) {
         nextPc = -1;
         return {};
     } else {
-        return {val: line};
+        return {text: line};
     }
 }
 
