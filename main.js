@@ -149,7 +149,12 @@ function evaluate(line, labels) {
         let value = parseInt(line.substr(1));
         nextPc = value - 1;
         return {};
-    } else if (line.match(/!/)) {
+    } else if (line.match(/^".*/)) {
+        let value = evaluate(line.substr(1), labels).val;
+        return {text: String.fromCharCode(value)};
+    }
+
+    else if (line.match(/!/)) {
         // halt
         nextPc = -1;
         return {};

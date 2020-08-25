@@ -2,7 +2,7 @@ shift: the programming language
 ---
 
 ### Statements:
-All statements have a specific syntax, and evaluate to either a value, a referenced value, or nothing. The syntax
+All statements have a specific syntax, and evaluate to either a value, a referenced value, text, or nothing. The syntax
  definition may use regular expressions. When `value` is used, it can refer to anything that acts as a value or a
   referenced value. Curly braces (`{}`) are used to signify parameters and should not be included in code. For
    example, one of the syntaxes of an @ statement (shown below) is `@{[0-9]+}`, but when using one, should be written
@@ -31,6 +31,9 @@ The $ statement evaluates to a referenced value and has the syntax of `$[A-Z]`. 
 #### The \_PRINT\_ Statement:
 The \_PRINT\_ statement evaluates to nothing and has the syntax of `_PRINT_ arg0 arg1 ...`. It can have an arbitrary
  number of arguments, and evaluates each and prints the result, separating each with spaces.
+#### The " Statement:
+The " statement evaluates to text and has the syntax of `"{value}`. It uses the value and converts it to a string
+ containing a single Unicode character.
 #### The ! Statement:
 The `!` statement has the syntax of `!` and is an unconditional halt.
 #### The Ternary:
