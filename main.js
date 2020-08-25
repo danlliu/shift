@@ -193,11 +193,12 @@ function execute() {
         // get line
         nextPc = pc + 1;
         let line = lines[pc];
-        if (line.match(/^[A-Z]+:/)) {
+        if (line.trim().match(/^[A-Z]+:/)) {
             line = line.substr(line.indexOf(':') + 1);
         }
         evaluate(line, labels);
         console.log(globals);
+        console.log(mem);
         if (nextPc === -1) {
             break;
         }
