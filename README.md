@@ -73,4 +73,5 @@ The syntax for checking logical AND is `{value}_AND_{value}`, and evaluates to 1
 #### Logical OR
 The syntax for checking logical OR is `{value}_OR_{value}`, and evaluates to 1 if and only if at least one input is
  nonzero.
- 
+#### Logical Negation
+The syntax for logical negation is `_NOT_{value}`, and evaluates to 1 if and only if the value is zero, and 0 otherwise.
