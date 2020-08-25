@@ -157,6 +157,7 @@ function evaluate(line, labels) {
 
 function execute() {
     output.empty();
+    document.querySelector('#title').innerHTML = 'Program is running...';
     let lines = codearea.val().split('\n');
     let labels = compile();
     console.log(labels);
@@ -193,4 +194,5 @@ function execute() {
         }
         pc = nextPc;
     }
+    document.querySelector('#title').innerHTML = 'Program output:';
 }
