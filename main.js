@@ -14,6 +14,7 @@ function compile() {
     let labels = {};
     let lines = codearea.val().split('\n');
     for (let i = 0; i < lines.length; ++i) {
+        lines[i] = lines[i].trim();
         if (lines[i].match(/^[A-Z]+:/)) {
             if (labels[lines[i].split(':')[0]] != null) {
                 output.innerHTML = "Error: duplicate labels.";
