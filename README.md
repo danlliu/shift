@@ -12,6 +12,9 @@ All statements have a specific syntax, and evaluate to either a value, a referen
 The @ statement evaluates to a referenced value and has the syntax of `@{value}` or `@{[0-9]+}`. The first syntax
  evaluates to the value at memory address `value`, while the second syntax evaluates to the value at the memory
   address specified by the integer after `@`. shift supports 4096 addresses, starting at `@0` and going up to `@4095`.
+#### The @ Statement: Second Use:
+The @ statement can also be used to get the line number of a label, using the syntax of `@{[A-Z]+}`. It returns the
+ line number, where the first line is line 1.
 #### The # Statement:
 The # statement evaluates to a value and has the syntax of `#{[0-9]+}`. It evaluates to a value specified by the
  integer after `#`.

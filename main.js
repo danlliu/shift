@@ -120,6 +120,13 @@ function evaluate(line, labels) {
     } else if (line.match(/^@[0-9]+/)) {
         let addr = parseInt(line.substr(1));
         return {memAddr: addr, val: mem[addr]};
+    } else if (line.match(/^@[A-Z]+/)) {
+        let addr = labels[line.substr(1)];
+        if (addr == null) {
+            output.append(`Error: undefined label in @ statement`);
+            return {};
+        }
+        return {val: addr + 1};
     } else if (line.match(/^@.*/)) {
         let addr = evaluate(line.substr(1), labels).val;
         return {memAddr: addr, val: mem[addr]};
