@@ -41,6 +41,7 @@ function assignToValueReference(newValue, ref) {
 let nextPc = 0;
 
 function evaluate(line, labels) {
+    line = line.trim();
     console.log(line);
     if (line.match(/^_PRINT_/)) {
         // print statement
