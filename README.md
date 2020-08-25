@@ -11,7 +11,7 @@ All statements have a specific syntax, and evaluate to either a value, a referen
 #### The @ Statement:
 The @ statement evaluates to a referenced value and has the syntax of `@{value}` or `@{[0-9]+}`. The first syntax
  evaluates to the value at memory address `value`, while the second syntax evaluates to the value at the memory
-  address specified by the integer after `@`.
+  address specified by the integer after `@`. shift supports 4096 addresses, starting at `@0` and going up to `@4095`.
 #### The # Statement:
 The # statement evaluates to a value and has the syntax of `#{[0-9]+}`. It evaluates to a value specified by the
  integer after `#`.

@@ -34,7 +34,6 @@ function assignToValueReference(newValue, ref) {
         // it's in memory
         mem[ref.memAddr] = newValue;
     } else {
-        console.log(ref.varIdx);
         globals[ref.varIdx] = newValue;
     }
 }
@@ -43,11 +42,9 @@ let nextPc = 0;
 
 function evaluate(line, labels) {
     line = line.trim();
-    console.log(line);
     if (line.match(/^_PRINT_/)) {
         // print statement
         let parts = line.split(' ');
-        console.log(parts);
         for (let i = 1; i < parts.length; i++) {
             let result = evaluate(parts[i], labels);
             if (result.val != null) {
@@ -59,11 +56,9 @@ function evaluate(line, labels) {
             else {
                 result = "error!";
             }
-            console.log(`Result: ${result}`);
             output.append(`${result} `);
         }
         output.append(`<br/>`);
-        console.log('end print call');
         return {};
     } else if (line.match(/.*?.*:.*/)) {
         // ternary
@@ -137,7 +132,6 @@ function evaluate(line, labels) {
     } else if (line.match(/^\^[A-Z]+$/)) {
         // jump to label
         let label = line.substr(1);
-        console.log(labels);
         if (labels[label] == null) {
             // invalid label
             output.append(`Error: undefined label ${label}`);
@@ -169,7 +163,6 @@ function execute() {
     document.querySelector('#title').innerHTML = 'Program is running...';
     let lines = codearea.val().split('\n');
     let labels = compile();
-    console.log(labels);
     if (labels === -1) {
         codearea.toggleAttribute("readonly", true);
         return;
@@ -179,8 +172,8 @@ function execute() {
         globals[i] = 0;
     }
 
-    mem = Array(256);
-    for (let i = 0; i < 256; ++i) {
+    mem = Array(4096);
+    for (let i = 0; i < 4096; ++i) {
         mem[i] = 0;
     }
 
@@ -197,8 +190,6 @@ function execute() {
             line = line.substr(line.indexOf(':') + 1);
         }
         evaluate(line, labels);
-        console.log(globals);
-        console.log(mem);
         if (nextPc === -1) {
             break;
         }
