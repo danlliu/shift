@@ -121,7 +121,10 @@ function evaluate(line, labels) {
     } else if (line.match(/.*-.*/)) {
         let parts = line.split(/-(.+)/);
         return {val: evaluate(parts[0], labels).val - evaluate(parts[1], labels).val};
-    }  else if (line.match(/@.*/)) {
+    } else if (line.match(/^@[0-9]+/)) {
+        let addr = parseInt(line.substr(1));
+        return {memAddr: addr, val: mem[addr]};
+    } else if (line.match(/^@.*/)) {
         let addr = evaluate(line.substr(1), labels).val;
         return {memAddr: addr, val: mem[addr]};
     } else if (line.match(/^\$[A-Z]$/)) {
