@@ -81,3 +81,6 @@ The syntax for checking logical OR is `{value}_OR_{value}`, and evaluates to 1 i
  nonzero.
 #### Logical Negation
 The syntax for logical negation is `_NOT_{value}`, and evaluates to 1 if and only if the value is zero, and 0 otherwise.
+
+### Anything else
+Any statements that do not follow the patterns above evaluate to themselves as text. For example, `_PRINT_ Hello world` will print out "Hello world" because there is nothing in "Hello" or "world" that matches any of the patterns above.
